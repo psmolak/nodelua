@@ -40,6 +40,7 @@ Spotkanie 2
 Spotkanie 3
 ===========
 
+  * Ewentualne dokończenie implementacji modułu **uv_tcp_t**
   * Cześciowa implementacja modułu **uv_fs_t** umożliwiająca prostą
     komunikację z plikami
 
@@ -48,6 +49,5 @@ Oddanie projektu
 
   * Ostatnie szlify do modułu Lua
   * Zaprojektowanie i zaimplementowanie obiektowego wrappera na surowy modul Lua
-  * Przykładowy, prosty, asynchroniczny scrapper WWW.
-  * Oddanie projektu
+  * Przykładowy, prosty, asynchroniczny server http.
 
