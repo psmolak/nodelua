@@ -1,7 +1,10 @@
 nodelua
 =======
+ 
+  **nodelua** jest próbą przeniesienia ideii asynchronicznego interpretera
+  opertego o pętle zdarzeń - **nodejs** - do świata Lua.    
 
-  **nodejs** jest runtime'm dla JavaScriptu, gdzie każda operacja,
+  **nodejs** jest środowiskiem uruchomieniowym dla JavaScriptu, gdzie każda operacja,
   która potęcjalnie może zablokować proces w oczekiwaniu na jakiś
   zasób jest wykonywana asynchronicznie. Przykładowo zwykłe pobranie
   zawartości pliku jest funkcją, która jedynie sygnalizuje chęć
