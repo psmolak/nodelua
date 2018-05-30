@@ -11,16 +11,17 @@ nodelua
   i przechodzi do dalszsego wykonywania programu. W momencie, gdy system
   operacyjny dostarczy rządany zasób, środowisko uruchomieniowe wykonuje
   zakolejkowany callback.
+  
+```javascript
+function on_read(data) {
+    console.log(data);
+}
 
-      ```
-      function on_read(data) {
-          console.log(data);
-      }
-      
-      fs.read(stdin, on_read);
-      
-      /* w momencie, gdy dane będą dostarczone przez OS, on_read zostanie odpalony */
-      ```
+fs.read(stdin, on_read);
+
+// w momencie, gdy dane będą dostarcozne przez OS,
+// on_read zostanie wywołany przez event loop
+```
 
   Cały mechanizm jest zaimplementowany przy użyciu biblioteki `libuv`
   oraz zagnieżdzonego śilnika js `V8`. Zadaniem tego projektu jest
@@ -30,30 +31,30 @@ nodelua
 Przykładowe użycie
 ==================
 
-  ```
-  $ cat script.lua
-  function callback()
-      print("This prints every 1000ms")
-  end
+```bash
+$ cat script.lua
+function callback()
+    print("This prints every 1000ms")
+end
   
-  timer = module.timer_new()
-  module.stimer_start(timer, 1000, callback)
+timer = module.timer_new()
+module.stimer_start(timer, 1000, callback)
 
-  $ nodelua script.lua
-  This prints every 1000ms.
-  This prints every 1000ms.
-  This prints every 1000ms.
-  ```
+$ nodelua script.lua
+This prints every 1000ms.
+This prints every 1000ms.
+This prints every 1000ms.
+```
 
 Zakres projektu
 ===============
 
   Oczywiście, sama bilbioteka `libuv` jest spora i składa się z wielu
   komponentów. Z powodu ograniczonego czasu i mojego poziomu znajomości
-  samej bilbioteki zadecydowałem się zaimplementować moduł,
-  umożliwiający **komunikację z gniazdami TCP**, moduł odpowiedzialny za
-  **komunikację z plikami** oraz moduł pozwalający na **cykliczne uruchamanie
-  funkcji w zadanych interwałach czasowych**. Całość zostanie dodatkowo
-  opakowana w wygodny, obiektowy interfejs. Jeśli wystarczy mi czasu
-  zaimplementuję prosty serwer WWW.
+  samej bilbioteki zadecydowałem się zaimplementować:   
+   * moduł umożliwiający **komunikację z gniazdami TCP**  
+   * moduł odpowiedzialny za **komunikację z plikami**
+   * moduł pozwalający na **cykliczne uruchamanie funkcji w zadanych interwałach czasowych**
 
+Całość zostanie dodatkowo opakowana w wygodny, obiektowy interfejs.
+Jeśli wystarczy mi czasu zaimplementuję prosty serwer http.
