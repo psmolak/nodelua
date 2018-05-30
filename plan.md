@@ -43,10 +43,11 @@ Spotkanie 3
   * Cześciowa implementacja modułu **uv_fs_t** umożliwiająca prostą
     komunikację z plikami
 
-Spotkanie 4
-===========
+Oddanie projektu
+================
 
   * Ostatnie szlify do modułu Lua
   * Zaprojektowanie i zaimplementowanie obiektowego wrappera na surowy modul Lua
   * Przykładowy, prosty, asynchroniczny scrapper WWW.
+  * Oddanie projektu
 
