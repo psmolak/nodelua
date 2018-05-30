@@ -1,7 +1,7 @@
 Spotkanie 1
 ===========
 
-  * Bliższe poznanie bilbioteki `libuv`
+  * Dogłębne poznanie bilbioteki `libuv`
   * Ustalenie architektury projektu
   * Stworzenie repo ze szkieletem projektu
   * Testowa implementacja modułu uruchamiania funkcji okresowo **uv_handle_t**
