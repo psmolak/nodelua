@@ -7,8 +7,6 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
-#include "module.h"
-
 struct nodelua_s {
     lua_State *L;
     uv_loop_t* loop;
@@ -16,17 +14,28 @@ struct nodelua_s {
 
 typedef struct nodelua_s nodelua_t;
 
+void nodelua_init(nodelua_t* node);
+void nodelua_openlibs(lua_State* L);
+void nodelua_run(nodelua_t* node, const char* file_name);
+
+
+
 void nodelua_init(nodelua_t* node)
 {
     node->L = luaL_newstate();
-
     luaL_openlibs(node->L);
-    lua_pushcfunction(node->L, l_uv_timer_init);
-    lua_setglobal(node->L, "l_uv_timer_init");
-    lua_pushcfunction(node->L, l_uv_timer_start);
-    lua_setglobal(node->L, "l_uv_timer_start");
-
+    nodelua_openlibs(node->L);
     node->loop = uv_default_loop();
+}
+
+void nodelua_openlibs(lua_State* L)
+{
+    /* lua_pushcfunction(node->L, l_uv_timer_init); */
+    /* lua_setglobal(node->L, "l_uv_timer_init"); */
+    /* lua_pushcfunction(node->L, l_uv_timer_start); */
+    /* lua_setglobal(node->L, "l_uv_timer_start"); */
+    /* lua_pushcfunction(node->L, l_uv_timer_stop); */
+    /* lua_setglobal(node->L, "l_uv_timer_stop"); */
 }
 
 void nodelua_run(nodelua_t* node, const char* file_name)

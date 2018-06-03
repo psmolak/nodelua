@@ -1,6 +1,15 @@
-nodelua: main.c module.c
-	gcc -o nodelua main.c module.c -llua -luv
+LIBS = -llua -luv
+MODULE = $(patsubst %.c,%.o,$(wildcard module/*.c))
+MODULE = module/handle.o
+
+nodelua: main.o $(MODULE)
+	@echo LD $^
+	@gcc -o nodelua $^ $(LIBS)
+
+%.o: %.c
+	@echo CC $^
+	@gcc -c $^ -o $@ 
 
 .PHONY: clean
 clean:
-	rm -rf nodelua *.o
+	rm -rf nodelua *.o $(MODULE)
