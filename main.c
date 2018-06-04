@@ -32,11 +32,28 @@ void nodelua_init(nodelua_t* node)
 void nodelua_openlibs(lua_State* L)
 {
     const struct luaL_Reg functions[] = {
+
+        /* uv_handle_t */
+        { "is_active", l_is_active },
+        { "is_closing", l_is_closing },
+        { "close", l_close },
+        { "ref", l_ref },
+        { "unref", l_unref },
+        { "has_ref", l_has_ref },
+        { "handle_size", l_handle_size },
+        /* { "send_buffer_size", l_send_buffer_size }, */
+        /* { "recv_buffer_size", l_recv_buffer_size }, */
+        /* { "fileno", l_fileno }, */
+        /* { "handle_get_loop", l_handle_get_loop }, */
+        { "handle_get_type", l_handle_get_type },
+
+        /* uv_timer_t */
         { "timer_new", l_timer_new },
         { "timer_delete", l_timer_delete },
         { "timer_init", l_timer_init },
         { "timer_start", l_timer_start },
         { "timer_stop", l_timer_stop },
+
         { NULL, NULL }
     };
 
