@@ -47,6 +47,20 @@ void nodelua_openlibs(lua_State* L)
         /* { "handle_get_loop", l_handle_get_loop }, */
         { "handle_get_type", l_handle_get_type },
 
+        /* uv_stream_t */
+        { "shutdown", l_shutdown },
+        { "listen", l_listen },
+        { "accept", l_accept },
+        { "read_start", l_read_start },
+        { "read_stop", l_read_stop },
+        { "write", l_write },
+        /* { "write2", l_write2 }, */
+        /* { "try_write", l_try_write }, */
+        /* { "is_readable", l_is_readable }, */
+        /* { "is_writable", l_is_writable }, */
+        /* { "stream_set_blocking", l_stream_set_blocking }, */
+        /* { "stream_get_write_queue_size", l_stream_get_write_queue_size }, */
+
         /* uv_timer_t */
         { "timer_new", l_timer_new },
         { "timer_delete", l_timer_delete },
