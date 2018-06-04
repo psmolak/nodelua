@@ -2,10 +2,13 @@
 #include <stdlib.h>
 
 #include <uv.h>
-
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
+
+#include "module/handle.h"
+#include "module/stream.h"
+#include "module/timer.h"
 
 struct nodelua_s {
     lua_State *L;
@@ -18,8 +21,6 @@ void nodelua_init(nodelua_t* node);
 void nodelua_openlibs(lua_State* L);
 void nodelua_run(nodelua_t* node, const char* file_name);
 
-
-
 void nodelua_init(nodelua_t* node)
 {
     node->L = luaL_newstate();
@@ -30,12 +31,17 @@ void nodelua_init(nodelua_t* node)
 
 void nodelua_openlibs(lua_State* L)
 {
-    /* lua_pushcfunction(node->L, l_uv_timer_init); */
-    /* lua_setglobal(node->L, "l_uv_timer_init"); */
-    /* lua_pushcfunction(node->L, l_uv_timer_start); */
-    /* lua_setglobal(node->L, "l_uv_timer_start"); */
-    /* lua_pushcfunction(node->L, l_uv_timer_stop); */
-    /* lua_setglobal(node->L, "l_uv_timer_stop"); */
+    const struct luaL_Reg functions[] = {
+        { "timer_new", l_timer_new },
+        { "timer_delete", l_timer_delete },
+        { "timer_init", l_timer_init },
+        { "timer_start", l_timer_start },
+        { "timer_stop", l_timer_stop },
+        { NULL, NULL }
+    };
+
+    luaL_newlib(L, functions);
+    lua_setglobal(L, "uv");
 }
 
 void nodelua_run(nodelua_t* node, const char* file_name)
