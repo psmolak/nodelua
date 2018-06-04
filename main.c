@@ -9,6 +9,8 @@
 #include "module/handle.h"
 #include "module/stream.h"
 #include "module/timer.h"
+#include "module/tcp.h"
+
 
 struct nodelua_s {
     lua_State *L;
@@ -60,6 +62,19 @@ void nodelua_openlibs(lua_State* L)
         /* { "is_writable", l_is_writable }, */
         /* { "stream_set_blocking", l_stream_set_blocking }, */
         /* { "stream_get_write_queue_size", l_stream_get_write_queue_size }, */
+
+        /* uv_tcp_t */
+        { "tcp_new", l_tcp_new },
+        { "tcp_delete", l_tcp_delete },
+        { "tcp_init", l_tcp_init },
+        { "tcp_init_ex", l_tcp_init_ex },
+        { "tcp_open", l_tcp_open },
+        { "tcp_nodelay", l_tcp_nodelay },
+        { "tcp_keepalive", l_tcp_keepalive },
+        { "tcp_simultaneous_accepts", l_tcp_simultaneous_accepts },
+        { "tcp_bind", l_tcp_bind },
+        /* { "tcp_getsockname", l_tcp_getsockname }, */
+        { "tcp_connect", l_tcp_connect },
 
         /* uv_timer_t */
         { "timer_new", l_timer_new },
