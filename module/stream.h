@@ -6,6 +6,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+
 typedef struct {
     lua_State* L;
     int on_connection;
@@ -27,6 +28,11 @@ typedef struct {
     lua_State* L;
     int callback;
 } l_connect_d;
+
+typedef struct {
+    lua_State* L;
+    int callback;
+} l_connection_d;
 
 
 /* int uv_shutdown(uv_shutdown_t* req, uv_stream_t* handle, uv_shutdown_cb cb) */

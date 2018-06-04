@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 #include <uv.h>
-
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
@@ -187,6 +186,7 @@ void l_write_cb(uv_write_t* req, int status)
     lua_call(data->L, 1, 0);
 }
 
+
 /* Callback called after a connection started by uv_connect() is done. */
 void l_connect_cb(uv_connect_t* req, int status)
 {
@@ -196,6 +196,7 @@ void l_connect_cb(uv_connect_t* req, int status)
     lua_call(data->L, 1, 0);
 }
 
+
 /* Callback called after a shutdown request has been completed */
 void l_shutdown_cb(uv_shutdown_t* req, int status)
 {
@@ -204,6 +205,7 @@ void l_shutdown_cb(uv_shutdown_t* req, int status)
     lua_pushinteger(data->L, status);
     lua_call(data->L, 1, 0);
 }
+
 
 /* Callback called when a stream server has received an incoming connection */
 void l_connection_cb(uv_stream_t* server, int status)
