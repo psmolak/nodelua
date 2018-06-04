@@ -40,7 +40,6 @@ int l_close(lua_State *L)
     uv_handle_t* handle = (uv_handle_t*)lua_touserdata(L, 1);
     l_handle_d *data = (l_handle_d*)handle->data;
 
-    /* TODO: Make sure if some already present callback is freed from registry */
     lua_pushvalue(L, 2);
     int on_close = luaL_ref(L, LUA_REGISTRYINDEX);
     data->on_close = on_close;
