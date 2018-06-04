@@ -1,6 +1,5 @@
 LIBS = -llua -luv
 MODULE = $(patsubst %.c,%.o,$(wildcard module/*.c))
-MODULE = module/handle.o module/timer.o
 
 nodelua: main.o $(MODULE)
 	@echo LD $^
