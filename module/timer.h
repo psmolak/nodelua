@@ -25,7 +25,7 @@ int l_timer_again(lua_State* L);
 /* void uv_timer_set_repeat(uv_timer_t* handle, uint64_t repeat); */
 int l_timer_set_repeat(lua_State* L);
 /* uint64_t uv_timer_get_repeat(const uv_timer_t* handle); */
-int l_timer_get_repeat(const uv_timer_t* handle);
+int l_timer_get_repeat(lua_State* L);
 
 
 /* void uv_timer_cb(uv_timer_t* handle); */

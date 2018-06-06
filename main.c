@@ -83,9 +83,9 @@ void nodelua_openlibs(lua_State* L)
         { "timer_init", l_timer_init },
         { "timer_start", l_timer_start },
         { "timer_stop", l_timer_stop },
-        /* { "timer_again", l_timer_again }, */
-        /* { "timer_set_repeat", l_timer_set_repeat }, */
-        /* { "timer_get_repeat", l_timer_get_repeat }, */
+        { "timer_again", l_timer_again },
+        { "timer_set_repeat", l_timer_set_repeat },
+        { "timer_get_repeat", l_timer_get_repeat },
 
         { NULL, NULL }
     };
