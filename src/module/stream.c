@@ -198,11 +198,16 @@ void l_read_cb(uv_stream_t* stream, ssize_t nread, const uv_buf_t* buf)
 {
     l_stream_d *data = (l_stream_d*)stream->data;
     lua_rawgeti(data->L, LUA_REGISTRYINDEX, data->on_read);
+    lua_pushlightuserdata(data->L, (void*)stream);
     lua_pushinteger(data->L, nread);
 
-    /* Now it should push those as table of strings or userdata */
-    lua_pushlightuserdata(data->L, (void*)buf);
-    lua_call(data->L, 2, 0);
+    /* TODO: Is copying really a nessesity here? */
+    if (nread > 0) lua_pushlstring(data->L, buf->base, nread);
+    else lua_pushnil(data->L);
+
+    lua_call(data->L, 3, 0);
+
+    free(buf->base);
 }
 
 
@@ -211,8 +216,9 @@ void l_write_cb(uv_write_t* req, int status)
 {
     l_write_d *data = (l_write_d*)req->data;
     lua_rawgeti(data->L, LUA_REGISTRYINDEX, data->callback);
+    lua_pushlightuserdata(data->L, (void*)req);
     lua_pushinteger(data->L, status);
-    lua_call(data->L, 1, 0);
+    lua_call(data->L, 2, 0);
 
     /* buffer deallocation */
     for (int i = 0; i < data->nbufs; i++) {
@@ -229,8 +235,9 @@ void l_connect_cb(uv_connect_t* req, int status)
 {
     l_connect_d *data = (l_connect_d*)req->data;
     lua_rawgeti(data->L, LUA_REGISTRYINDEX, data->callback);
+    lua_pushlightuserdata(data->L, (void*)req);
     lua_pushinteger(data->L, status);
-    lua_call(data->L, 1, 0);
+    lua_call(data->L, 2, 0);
 }
 
 
@@ -239,8 +246,9 @@ void l_shutdown_cb(uv_shutdown_t* req, int status)
 {
     l_shutdown_d *data = (l_shutdown_d*)req->data;
     lua_rawgeti(data->L, LUA_REGISTRYINDEX, data->callback);
+    lua_pushlightuserdata(data->L, (void*)req);
     lua_pushinteger(data->L, status);
-    lua_call(data->L, 1, 0);
+    lua_call(data->L, 2, 0);
 }
 
 
@@ -249,6 +257,7 @@ void l_connection_cb(uv_stream_t* server, int status)
 {
     l_stream_d *data = (l_stream_d*)server->data;
     lua_rawgeti(data->L, LUA_REGISTRYINDEX, data->on_connection);
+    lua_pushlightuserdata(data->L, (void*)server);
     lua_pushinteger(data->L, status);
-    lua_call(data->L, 1, 0);
+    lua_call(data->L, 2, 0);
 }

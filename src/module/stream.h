@@ -8,8 +8,9 @@
 
 typedef struct l_stream_d {
     lua_State* L;
-    int on_connection;
     int on_alloc;
+    int on_close;
+    int on_connection;
     int on_read;
 } l_stream_d;
 

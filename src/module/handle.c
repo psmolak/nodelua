@@ -139,14 +139,18 @@ int l_handle_get_type(lua_State* L)
 /* Type definition for callback passed to uv_read_start() and uv_udp_recv_start() */
 void l_alloc_cb(uv_handle_t* handle, size_t suggested_size, uv_buf_t* buf)
 {
+    /* TODO: Make inheritance of struct possible. */
+    /* Right now l_handle_d and l_stream_d couse errors */
+
     l_handle_d *data = (l_handle_d*)handle->data;
     lua_State *L = data->L;
     int on_alloc_ref = data->on_alloc;
 
-    /* TODO: make sure Lua callback knows on what handle it operates */
-    /* TODO: pass uv_buf_t* object and suggested_size to Lua callback somehow */
     lua_rawgeti(L, LUA_REGISTRYINDEX, on_alloc_ref);
-    lua_call(L, 0, 0);
+    lua_pushlightuserdata(L, (void*)handle);
+    lua_pushinteger(L, suggested_size);
+    lua_pushlightuserdata(L, (void*)buf);
+    lua_call(L, 3, 0);
 
     buf->base = malloc(suggested_size);
     buf->len = suggested_size;
@@ -164,9 +168,9 @@ void l_close_cb(uv_handle_t* handle)
     int on_close_ref = data->on_close;
     int on_alloc_ref = data->on_alloc;
 
-    /* TODO: make sure Lua callback knows on what handle it operates */
     lua_rawgeti(L, LUA_REGISTRYINDEX, on_close_ref);
-    lua_call(L, 0, 0);
+    lua_pushlightuserdata(L, (void*)handle);
+    lua_call(L, 1, 0);
 
     /* It's save to unref Lua callback here, since every future
      * close call on this handle will accept fresh callback*/
