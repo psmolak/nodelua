@@ -33,12 +33,21 @@ Spotkanie 1
 Spotkanie 2
 ===========
 
+  Głównie celem będzie pełna implementacja modułów, dzięki którym
+  będzie możliwe tworzenie gniazd TCP i wykonywanie połączeń.
+  Zostanie również napisany prosty skrypt w Lua demonstrujący
+  możliwości.
+
   * Pełna implementacja modułu **uv_handle_t**
   * Pełna implementacja modułu **uv_stream_t**
   * Częściowa/pełna implementacja modułu **uv_tcp_t**
 
 Spotkanie 3
 ===========
+
+  Celem będzie zaimplementowanie modułu umozliwiającgo komunikację z
+  systemem plików. Przykładowy, dzięki temu wcześniejszy serwer będzie
+  w stanie wysyłać informacje pobierane z plików.
 
   * Ewentualne dokończenie implementacji modułu **uv_tcp_t**
   * Cześciowa implementacja modułu **uv_fs_t** umożliwiająca prostą
@@ -47,7 +56,11 @@ Spotkanie 3
 Oddanie projektu
 ================
 
+  Dokończenie implementacji modułu napisanego w C oraz utworzenie w
+  pełni funkcjonalnego, obiektowego wrappera. Nastepnie na jego
+  podstawie zostanie napisany prosty serwer WWW lub server czatowy.
+
   * Ostatnie szlify do modułu Lua
   * Zaprojektowanie i zaimplementowanie obiektowego wrappera na surowy modul Lua
-  * Przykładowy, prosty, asynchroniczny server http.
+  * Przykładowy, prosty, asynchroniczny server http / server czatowy.
 
