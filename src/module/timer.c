@@ -26,6 +26,7 @@ int l_timer_new(lua_State* L)
 int l_timer_delete(lua_State* L)
 {
     uv_timer_t* handle = lua_touserdata(L, 1);
+    free(handle->data);
     free(handle);
 
     return 0;

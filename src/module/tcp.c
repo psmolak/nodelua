@@ -18,6 +18,10 @@
 int l_tcp_new(lua_State* L)
 {
     uv_tcp_t* handle = malloc(sizeof(uv_tcp_t));
+    l_stream_d* data = malloc(sizeof(l_stream_d));
+    data->L = L;
+    handle->data = data;
+
     lua_pushlightuserdata(L, (void*)handle);
 
     return 1;
@@ -26,6 +30,7 @@ int l_tcp_new(lua_State* L)
 int l_tcp_delete(lua_State* L)
 {
     uv_tcp_t* handle = lua_touserdata(L, 1);
+    free(handle->data);
     free(handle);
 
     return 0;
