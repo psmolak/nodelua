@@ -6,8 +6,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
-
-typedef struct {
+typedef struct l_stream_d {
     lua_State* L;
     int on_connection;
     int on_alloc;
@@ -17,24 +16,18 @@ typedef struct {
 typedef struct {
     lua_State* L;
     int callback;
-} l_shutdown_d;
-
-typedef struct {
-    lua_State* L;
-    int callback;
     uv_buf_t* bufs;
     size_t nbufs;
 } l_write_d;
 
-typedef struct {
+struct l_request_d {
     lua_State* L;
     int callback;
-} l_connect_d;
+};
 
-typedef struct {
-    lua_State* L;
-    int callback;
-} l_connection_d;
+typedef struct l_request_d l_shutdown_d;
+typedef struct l_request_d l_connect_d;
+typedef struct l_request_d l_connection_d;
 
 
 /* int uv_shutdown(uv_shutdown_t* req, uv_stream_t* handle, uv_shutdown_cb cb) */
