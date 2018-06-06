@@ -103,11 +103,16 @@ void nodelua_run(nodelua_t* node, const char* file_name)
     uv_run(node->loop, UV_RUN_DEFAULT);
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
+    if (argc < 2) {
+        fprintf(stderr, "Usage: ./nodelua FILE\n");
+        exit(EXIT_FAILURE);
+    }
+
     nodelua_t node;
     nodelua_init(&node);
-    nodelua_run(&node, "script.lua");
+    nodelua_run(&node, argv[1]);
 
     return 0;
 }
