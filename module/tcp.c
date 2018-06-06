@@ -62,9 +62,7 @@ int l_tcp_init_ex(lua_State* L)
 int l_tcp_open(lua_State* L)
 {
     uv_tcp_t *handle = (uv_tcp_t*)lua_touserdata(L, 1);
-
-    /* TODO: initialize somehow this socket (perhaps some Lua table?) */
-    uv_os_sock_t sock;
+    uv_os_sock_t sock = lua_tointeger(L, 2);
 
     lua_pushinteger(L, uv_tcp_open(handle, sock));
     return 1;
@@ -109,12 +107,14 @@ int l_tcp_simultaneous_accepts(lua_State* L)
 int l_tcp_bind(lua_State* L)
 {
     uv_tcp_t* handle = (uv_tcp_t*)lua_touserdata(L, 1);
+    const char* ip = lua_tostring(L, 2);
+    int port = lua_tointeger(L, 3);
+    unsigned int flags = lua_tonumber(L, 4);
 
-    /* TODO: make sure this is passed properly */
-    const struct sockaddr *addr = (struct sockaddr*)lua_touserdata(L, 2);
-    unsigned int flags = lua_tonumber(L, 3);
+    struct sockaddr_in addr;
+    uv_ip4_addr(ip, port, &addr);
 
-    lua_pushinteger(L, uv_tcp_bind(handle, addr, flags));
+    lua_pushinteger(L, uv_tcp_bind(handle, (struct sockaddr*)&addr, flags));
     return 1;
 }
 
@@ -126,18 +126,28 @@ int l_tcp_getsockname(lua_State* L)
 }
 
 
+/* int uv_tcp_getpeername(const uv_tcp_t* handle, struct sockaddr* name, int* namelen) */
+int l_tcp_getpeername(lua_State* L)
+{
+
+}
+
+
 /* int uv_tcp_connect(uv_connect_t* req, uv_tcp_t* handle, const struct sockaddr* addr, uv_connect_cb cb) */
 int l_tcp_connect(lua_State* L)
 {
     uv_connect_t *req = (uv_connect_t*)lua_touserdata(L, 1);
     uv_tcp_t *handle = (uv_tcp_t*)lua_touserdata(L, 2);
-    const struct sockaddr *addr = (struct sockaddr*)lua_touserdata(L, 3);
-    lua_pushvalue(L, 4);
+    const char* ip = lua_tostring(L, 3);
+    int port = lua_tointeger(L, 4);
+    lua_pushvalue(L, 5);
     int cb_ref = luaL_ref(L, LUA_REGISTRYINDEX);
-
     l_connect_d *data = req->data;
     data->callback = cb_ref;
 
-    lua_pushinteger(L, uv_tcp_connect(req, handle, addr, l_connect_cb));
+    struct sockaddr_in addr;
+    uv_ip4_addr(ip, port, &addr);
+
+    lua_pushinteger(L, uv_tcp_connect(req, handle, (struct sockaddr*)&addr, l_connect_cb));
     return 1;
 }
