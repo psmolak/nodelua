@@ -61,7 +61,7 @@ void nodelua_openlibs(lua_State* L)
         { "is_readable", l_is_readable },
         { "is_writable", l_is_writable },
         { "stream_set_blocking", l_stream_set_blocking },
-        /* { "stream_get_write_queue_size", l_stream_get_write_queue_size }, */
+        { "stream_get_write_queue_size", l_stream_get_write_queue_size },
 
         /* uv_tcp_t */
         { "tcp_new", l_tcp_new },
@@ -74,6 +74,7 @@ void nodelua_openlibs(lua_State* L)
         { "tcp_simultaneous_accepts", l_tcp_simultaneous_accepts },
         { "tcp_bind", l_tcp_bind },
         /* { "tcp_getsockname", l_tcp_getsockname }, */
+        /* { "tcp_getpeername", l_tcp_getpeername }, */
         { "tcp_connect", l_tcp_connect },
 
         /* uv_timer_t */
@@ -82,6 +83,9 @@ void nodelua_openlibs(lua_State* L)
         { "timer_init", l_timer_init },
         { "timer_start", l_timer_start },
         { "timer_stop", l_timer_stop },
+        /* { "timer_again", l_timer_again }, */
+        /* { "timer_set_repeat", l_timer_set_repeat }, */
+        /* { "timer_get_repeat", l_timer_get_repeat }, */
 
         { NULL, NULL }
     };
