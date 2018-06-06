@@ -11,4 +11,8 @@ nodelua: src/main.o $(MODULE)
 
 .PHONY: clean
 clean:
-	rm -rf nodelua src/*.o $(MODULE)
+	rm -rf src/*.o $(MODULE)
+
+.PHONY: dist-clean
+dist-clean: clean
+	rm -rf nodelua
