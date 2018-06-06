@@ -1,7 +1,7 @@
 LIBS = -llua -luv
-MODULE = $(patsubst %.c,%.o,$(wildcard module/*.c))
+MODULE = $(patsubst %.c,%.o,$(wildcard src/module/*.c))
 
-nodelua: main.o $(MODULE)
+nodelua: src/main.o $(MODULE)
 	@echo LD $^
 	@gcc -o nodelua $^ $(LIBS)
 
@@ -11,4 +11,4 @@ nodelua: main.o $(MODULE)
 
 .PHONY: clean
 clean:
-	rm -rf nodelua *.o $(MODULE)
+	rm -rf nodelua src/*.o $(MODULE)
