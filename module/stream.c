@@ -134,28 +134,37 @@ int l_try_write(lua_State *L)
 /* int uv_is_readable(const uv_stream_t* handle) */
 int l_is_readable(lua_State *L)
 {
-
+    uv_stream_t *handle = (uv_stream_t*)lua_touserdata(L, 1);
+    lua_pushinteger(L, uv_is_readable(handle));
+    return 1;
 }
 
 
 /* int uv_is_writable(const uv_stream_t* handle) */
 int l_is_writable(lua_State *L)
 {
-
+    uv_stream_t *handle = (uv_stream_t*)lua_touserdata(L, 1);
+    lua_pushinteger(L, uv_is_writable(handle));
+    return 1;
 }
 
 
 /* int uv_stream_set_blocking(uv_stream_t* handle, int blocking) */
 int l_stream_set_blocking(lua_State *L)
 {
-
+    uv_stream_t *handle = (uv_stream_t*)lua_touserdata(L, 1);
+    int blocking = lua_tonumber(L, 2);
+    lua_pushinteger(L, uv_stream_set_blocking(handle, blocking));
+    return 1;
 }
 
 
 /* size_t uv_stream_get_write_queue_size(const uv_stream_t* stream) */
 int l_stream_get_write_queue_size(lua_State *L)
 {
-
+    uv_stream_t *stream = (uv_stream_t*)lua_touserdata(L, 1);
+    lua_pushinteger(L, uv_stream_get_write_queue_size(stream));
+    return 1;
 }
 
 

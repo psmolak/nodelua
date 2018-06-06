@@ -58,9 +58,9 @@ void nodelua_openlibs(lua_State* L)
         { "write", l_write },
         /* { "write2", l_write2 }, */
         /* { "try_write", l_try_write }, */
-        /* { "is_readable", l_is_readable }, */
-        /* { "is_writable", l_is_writable }, */
-        /* { "stream_set_blocking", l_stream_set_blocking }, */
+        { "is_readable", l_is_readable },
+        { "is_writable", l_is_writable },
+        { "stream_set_blocking", l_stream_set_blocking },
         /* { "stream_get_write_queue_size", l_stream_get_write_queue_size }, */
 
         /* uv_tcp_t */
