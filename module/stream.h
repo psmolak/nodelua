@@ -22,6 +22,8 @@ typedef struct {
 typedef struct {
     lua_State* L;
     int callback;
+    uv_buf_t* bufs;
+    size_t nbufs;
 } l_write_d;
 
 typedef struct {

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <uv.h>
 #include <lua.h>
@@ -102,17 +103,36 @@ int l_write(lua_State* L)
 {
     uv_write_t* req = (uv_write_t*)lua_touserdata(L, 1);
     uv_stream_t* handle = (uv_stream_t*)lua_touserdata(L, 2);
+    l_write_d *data = (l_write_d*)req->data;
 
-    /* this should be Lua table of uv_buf_t's */
-    const uv_buf_t *bufs = (uv_buf_t*)lua_touserdata(L, 3);
-    unsigned int nbuffs = lua_tointeger(L, 4);
+    /* Third argument is Lua table filled with strings treated as data buffers */
+    /* Those strings are available only in function scope, thus they must be copied */
+    /* Those newly allocated buffers are then freed in l_write_cb */
+
+    unsigned int nbufs = lua_tointeger(L, 4);
+    uv_buf_t *bufs = malloc(sizeof(uv_buf_t) * nbufs);
+
+    data->bufs = bufs;
+    data->nbufs = nbufs;
+
+    for (int i = 0; i < nbufs; i++) {
+        lua_geti(L, 3, i + 1);
+
+        size_t len;
+        const char *buf = lua_tolstring(L, -1, &len);
+
+        bufs[i].len = len;
+        bufs[i].base = malloc(sizeof(char) * len);
+        memcpy((void*)bufs[i].base, (void*)buf, len);
+
+        lua_pop(L, 1);
+    }
 
     lua_pushvalue(L, 5);
     int write_cb_ref = luaL_ref(L, LUA_REGISTRYINDEX);
-    l_write_d *data = (l_write_d*)req->data;
     data->callback = write_cb_ref;
 
-    lua_pushinteger(L, uv_write(req, handle, bufs, nbuffs, l_write_cb));
+    lua_pushinteger(L, uv_write(req, handle, bufs, nbufs, l_write_cb));
     return 1;
 }
 
@@ -193,6 +213,14 @@ void l_write_cb(uv_write_t* req, int status)
     lua_rawgeti(data->L, LUA_REGISTRYINDEX, data->callback);
     lua_pushinteger(data->L, status);
     lua_call(data->L, 1, 0);
+
+    /* buffer deallocation */
+    for (int i = 0; i < data->nbufs; i++) {
+        free(data->bufs[i].base);
+    }
+
+    free(data->bufs);
+    data->nbufs = 0;
 }
 
 
