@@ -6,6 +6,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+#include "module/request.h"
 #include "module/handle.h"
 #include "module/stream.h"
 #include "module/timer.h"
@@ -86,6 +87,20 @@ void nodelua_openlibs(lua_State* L)
         { "timer_again", l_timer_again },
         { "timer_set_repeat", l_timer_set_repeat },
         { "timer_get_repeat", l_timer_get_repeat },
+
+        /* uv_req_t */
+        { "write_req_new", l_write_req_new },
+        { "write_req_delete", l_write_req_delete },
+        { "shutdown_req_new", l_shutdown_req_new },
+        { "shutdown_req_delete", l_shutdown_req_delete },
+        { "connect_req_new", l_connect_req_new },
+        { "connect_req_delete", l_connect_req_delete },
+        { "req_cancel", l_req_cancel },
+        { "req_size", l_req_size },
+        /* { "req_get_data", l_req_get_data }, */
+        /* { "req_set_data", l_req_set_data }, */
+        /* { "req_get_type", l_req_get_type }, */
+        /* { "req_type_name", l_req_type_name }, */
 
         { NULL, NULL }
     };

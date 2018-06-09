@@ -7,6 +7,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+#include "request.h"
 #include "handle.h"
 #include "stream.h"
 

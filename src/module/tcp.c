@@ -6,6 +6,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+#include "request.h"
 #include "stream.h"
 #include "tcp.h"
 
@@ -23,7 +24,6 @@ int l_tcp_new(lua_State* L)
     handle->data = data;
 
     lua_pushlightuserdata(L, (void*)handle);
-
     return 1;
 }
 
@@ -32,7 +32,6 @@ int l_tcp_delete(lua_State* L)
     uv_tcp_t* handle = lua_touserdata(L, 1);
     free(handle->data);
     free(handle);
-
     return 0;
 }
 

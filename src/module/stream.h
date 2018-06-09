@@ -7,28 +7,14 @@
 #include <lualib.h>
 
 typedef struct l_stream_d {
+    /* l_handle_d */
     lua_State* L;
     int on_alloc;
     int on_close;
+
     int on_connection;
     int on_read;
 } l_stream_d;
-
-typedef struct {
-    lua_State* L;
-    int callback;
-    uv_buf_t* bufs;
-    size_t nbufs;
-} l_write_d;
-
-struct l_request_d {
-    lua_State* L;
-    int callback;
-};
-
-typedef struct l_request_d l_shutdown_d;
-typedef struct l_request_d l_connect_d;
-typedef struct l_request_d l_connection_d;
 
 
 /* int uv_shutdown(uv_shutdown_t* req, uv_stream_t* handle, uv_shutdown_cb cb) */
