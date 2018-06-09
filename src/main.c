@@ -6,6 +6,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+#include "module/filesystem.h"
 #include "module/request.h"
 #include "module/handle.h"
 #include "module/stream.h"
@@ -101,6 +102,46 @@ void nodelua_openlibs(lua_State* L)
         /* { "req_set_data", l_req_set_data }, */
         /* { "req_get_type", l_req_get_type }, */
         /* { "req_type_name", l_req_type_name }, */
+
+        /* uv_fs_t */
+        { "fs_req_new", l_fs_req_new },
+        { "fs_req_delete", l_fs_req_delete },
+        { "fs_req_cleanup", l_fs_req_cleanup },
+        { "fs_close", l_fs_close },
+        { "fs_open", l_fs_open },
+        { "fs_read", l_fs_read },
+        /* { "fs_unlink", l_fs_unlink }, */
+        /* { "fs_write", l_fs_write }, */
+        /* { "fs_mkdir", l_fs_mkdir }, */
+        /* { "fs_mkdtemp", l_fs_mkdtemp }, */
+        /* { "fs_rmdir", l_fs_rmdir }, */
+        /* { "fs_scandir", l_fs_scandir }, */
+        /* { "fs_scandir_next", l_fs_scandir_next }, */
+        /* { "fs_stat", l_fs_stat }, */
+        /* { "fs_fstat", l_fs_fstat }, */
+        /* { "fs_lstat", l_fs_lstat }, */
+        /* { "fs_rename", l_fs_rename }, */
+        /* { "fs_fsync", l_fs_fsync }, */
+        /* { "fs_fdatasync", l_fs_fdatasync }, */
+        /* { "fs_ftruncate", l_fs_ftruncate }, */
+        /* { "fs_copyfile", l_fs_copyfile }, */
+        /* { "fs_sendfile", l_fs_sendfile }, */
+        /* { "fs_access", l_fs_access }, */
+        /* { "fs_chmod", l_fs_chmod }, */
+        /* { "fs_fchmod", l_fs_fchmod }, */
+        /* { "fs_utime", l_fs_utime }, */
+        /* { "fs_futime", l_fs_futime }, */
+        /* { "fs_link", l_fs_link }, */
+        /* { "fs_symlink", l_fs_symlink }, */
+        /* { "fs_readlink", l_fs_readlink }, */
+        /* { "fs_realpath", l_fs_realpath }, */
+        /* { "fs_chown", l_fs_chown }, */
+        /* { "fs_fchown", l_fs_fchown }, */
+        /* { "fs_get_type", l_fs_get_type }, */
+        /* { "fs_get_result", l_fs_get_result }, */
+        /* { "fs_get_ptr", l_fs_get_ptr }, */
+        /* { "fs_get_path", l_fs_get_path }, */
+        /* { "fs_get_statbuf", l_fs_get_statbuf }, */
 
         { NULL, NULL }
     };
