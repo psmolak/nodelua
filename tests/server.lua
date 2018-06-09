@@ -36,7 +36,15 @@ status = uv.listen(server, 128, function(request, status)
 				print("Server: closing client in callback")
 			end)
 		else
-			print(nread, data)
+			-- broadcast message
+			request = uv.write_req_new()
+			bufs = {
+				data
+			}
+
+			uv.write(request, client, bufs, 1, function(request, status)
+				uv.write_req_delete(request)
+			end)
 		end
 	end)
 end)
