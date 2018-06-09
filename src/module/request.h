@@ -1,3 +1,6 @@
+#ifndef REQUEST_H
+#define REQUEST_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -49,3 +52,4 @@ int l_req_get_type(lua_State* L);
 /* const char* uv_req_type_name(uv_req_type type) */
 int l_req_type_name(lua_State* L);
 
+#endif

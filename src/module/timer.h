@@ -1,3 +1,6 @@
+#ifndef TIMER_H
+#define TIMER_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -30,3 +33,5 @@ int l_timer_get_repeat(lua_State* L);
 
 /* void uv_timer_cb(uv_timer_t* handle); */
 void l_timer_cb(uv_timer_t* handle);
+
+#endif

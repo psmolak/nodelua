@@ -1,3 +1,6 @@
+#ifndef STREAM_H
+#define STREAM_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -49,3 +52,4 @@ void l_connect_cb(uv_connect_t* req, int status);
 void l_shutdown_cb(uv_shutdown_t* req, int status);
 void l_connection_cb(uv_stream_t* server, int status);
 
+#endif

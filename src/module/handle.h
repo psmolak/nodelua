@@ -1,3 +1,6 @@
+#ifndef HANDLE_H
+#define HANDLE_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -53,3 +56,5 @@ int l_handle_get_type(lua_State *L);
 
 void l_alloc_cb(uv_handle_t* handle, size_t suggested_size, uv_buf_t* buf);
 void l_close_cb(uv_handle_t* handle);
+
+#endif

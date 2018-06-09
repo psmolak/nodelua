@@ -1,3 +1,6 @@
+#ifndef TCP_H
+#define TCP_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -30,3 +33,5 @@ int l_tcp_getsockname(lua_State* L);
 int l_tcp_getpeername(lua_State* L);
 /* int uv_tcp_connect(uv_connect_t* req, uv_tcp_t* handle, const struct sockaddr* addr, uv_connect_cb cb) */
 int l_tcp_connect(lua_State* L);
+
+#endif
