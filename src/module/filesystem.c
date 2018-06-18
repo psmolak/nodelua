@@ -21,6 +21,7 @@ int l_fs_req_new(lua_State* L)
     l_fs_data* data = malloc(sizeof(l_fs_data));
     req->data = data;
     data->L = L;
+    data->callback = LUA_NOREF;
 
     lua_pushlightuserdata(L, (void*)req);
     return 1;
@@ -45,6 +46,10 @@ int l_fs_req_delete(lua_State* L)
 int l_fs_req_cleanup(lua_State* L)
 {
     uv_fs_t* req = (uv_fs_t*)lua_touserdata(L, 1);
+    l_fs_data* data = (l_fs_data*)req->data;
+    if (data->callback != LUA_NOREF) {
+        luaL_unref(L, LUA_REGISTRYINDEX, data->callback);
+    }
     uv_fs_req_cleanup(req);
     return 0;
 }
@@ -77,7 +82,7 @@ int l_fs_open(lua_State* L)
     l_fs_data* data = req->data;
     data->callback = callback;
 
-    lua_pushinteger(L, uv_fs_open(uv_default_loop(), req, path, flags, O_RDONLY , l_fs_callback));
+    lua_pushinteger(L, uv_fs_open(uv_default_loop(), req, path, flags, mode , l_fs_callback));
     return 1;
 }
 
