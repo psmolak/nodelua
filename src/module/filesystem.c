@@ -18,7 +18,14 @@
 int l_fs_req_new(lua_State* L)
 {
     uv_fs_t* req = malloc(sizeof(uv_fs_t));
+    if (req == NULL) {
+        luaL_error(L, "Failed to allocate memory for fs request");
+    }
     l_fs_data* data = malloc(sizeof(l_fs_data));
+    if (data == NULL) {
+        free(req);
+        luaL_error(L, "Failed to allocate memory for fs data");
+    }
     req->data = data;
     data->L = L;
     data->callback = LUA_NOREF;

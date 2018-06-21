@@ -18,6 +18,9 @@
 int l_timer_new(lua_State* L)
 {
     uv_timer_t* handle = malloc(sizeof(uv_timer_t));
+    if (handle == NULL) {
+        luaL_error(L, "Error while allocating memory for timer handler");
+    }
     lua_pushlightuserdata(L, (void*)handle);
 
     return 1;
