@@ -153,7 +153,8 @@ void nodelua_openlibs(lua_State* L)
 void nodelua_run(nodelua_t* node, const char* file_name)
 {
     if (luaL_loadfile(node->L, file_name) || lua_pcall(node->L, 0, 0, 0)) {
-        fprintf(stderr, "Error occured while reading script file: %s\n", file_name);
+        fprintf(stderr, "Error occured while reading script file: %s\n%s\n",
+                file_name, lua_tostring(node->L, -1));
     }
 
     uv_run(node->loop, UV_RUN_DEFAULT);
