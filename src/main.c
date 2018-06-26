@@ -13,27 +13,29 @@
 #include "module/timer.h"
 #include "module/tcp.h"
 
-
-struct nodelua_s {
+typedef struct nodelua_s {
     lua_State *L;
     uv_loop_t* loop;
-};
+} nodelua_t;
 
-typedef struct nodelua_s nodelua_t;
+static void nodelua_init(nodelua_t* node);
+static void nodelua_openlibs(lua_State* L);
+static void nodelua_dofile(nodelua_t* node, const char* file_name);
+static void nodelua_run(nodelua_t* node);
 
-void nodelua_init(nodelua_t* node);
-void nodelua_openlibs(lua_State* L);
-void nodelua_run(nodelua_t* node, const char* file_name);
-
-void nodelua_init(nodelua_t* node)
+static void nodelua_init(nodelua_t* node)
 {
     node->L = luaL_newstate();
+    if (node->L == NULL) {
+        fprintf(stderr, "Memory allocation error for new Lua state\n");
+        exit(EXIT_FAILURE);
+    }
     luaL_openlibs(node->L);
     nodelua_openlibs(node->L);
     node->loop = uv_default_loop();
 }
 
-void nodelua_openlibs(lua_State* L)
+static void nodelua_openlibs(lua_State* L)
 {
     const struct luaL_Reg functions[] = {
 
@@ -150,26 +152,26 @@ void nodelua_openlibs(lua_State* L)
     lua_setglobal(L, "uv");
 }
 
-void nodelua_run(nodelua_t* node, const char* file_name)
+static void nodelua_dofile(nodelua_t* node, const char* file_name)
 {
     if (luaL_loadfile(node->L, file_name) || lua_pcall(node->L, 0, 0, 0)) {
-        fprintf(stderr, "Error occured while reading script file: %s\n%s\n",
-                file_name, lua_tostring(node->L, -1));
+        fprintf(stderr, "%s\n", lua_tostring(node->L, -1));
+        exit(EXIT_FAILURE);
     }
+}
 
+static void nodelua_run(nodelua_t* node)
+{
     uv_run(node->loop, UV_RUN_DEFAULT);
 }
 
 int main(int argc, char* argv[])
 {
-    if (argc < 2) {
-        fprintf(stderr, "Usage: ./nodelua FILE\n");
-        exit(EXIT_FAILURE);
-    }
-
+    const char* file_name = argc > 1 ? argv[1] : NULL;
     nodelua_t node;
     nodelua_init(&node);
-    nodelua_run(&node, argv[1]);
+    nodelua_dofile(&node, file_name);
+    nodelua_run(&node);
 
     return 0;
 }
