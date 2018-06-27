@@ -62,7 +62,7 @@ function Stream:write(data, callback)
         assert(type(data[i]) == "string", string.format("%d argument of data table must be string", i))
     end
 
-    local req = request.write:new()
+    local req = request.Write:new()
     local status = uv.write(req._ptr, self._ptr, data, #data, function(req_, status)
         callback(self, status)
         req:delete()
