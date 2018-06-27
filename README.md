@@ -2,62 +2,61 @@ nodelua
 =======
  
   **nodelua** jest próbą przeniesienia ideii asynchronicznego interpretera
-  opertego o pętle zdarzeń - **nodejs** - do świata Lua.    
+  opertego o pętle zdarzeń - **nodejs** - do świata Lua.  
+  Dokladna dokumentacja znajduje sie w katalogu `docs/`.
 
-  **nodejs** jest środowiskiem uruchomieniowym dla JavaScriptu, gdzie każda operacja,
-  która potęcjalnie może zablokować proces w oczekiwaniu na jakiś
-  zasób jest wykonywana asynchronicznie. Przykładowo zwykłe pobranie
-  zawartości pliku jest funkcją, która jedynie sygnalizuje chęć
-  pobrania zawartości pliku i dodatkowo przyjmuje funkcję, która zostanie
-  uruchomiona, gdy rządanie zostanie spełnione przez system operacyjny.
-  Środowisko uruchomieniowe wykonuje zapytanie do systemu operacyjnego
-  i przechodzi do dalszsego wykonywania programu. W momencie, gdy system
-  operacyjny dostarczy rządany zasób, środowisko uruchomieniowe wykonuje
-  zakolejkowany callback.
-  
-```javascript
-function on_read(data) {
-    console.log(data);
-}
+Kompilacja oraz uruchomienie
+============================
 
-fs.read(stdin, on_read);
+Do skompilowania potrzebne są następujące bilbioteki (Debian):
+ * liblua5.3-0
+ * liblua5.3-dev
+ * libuv1
+ * libuv1-dev
 
-// w momencie, gdy dane będą dostarcozne przez OS,
-// on_read zostanie wywołany przez event loop
-```
+Nastepnie w głównym katalogu projektu należy skompilować program
+poleceniem `make`.  
+Program `nodelua` przyjmuje jako pierwszy argument nazwę pliku z kodem
+Lua lub czyta ze standardowego wejścia.  
+Przykładowe programy znajdują się w katalogu `tests/`.
 
-  Cały mechanizm jest zaimplementowany przy użyciu biblioteki `libuv`
-  oraz zagnieżdzonego śilnika js `V8`. Zadaniem tego projektu jest
-  wykorzystanie bilbioteki `libuv` aby stworzyć takie środowisko
-  uruchomieniowe, gdzie językiem skryptowym będzie Lua.
-
-Przykładowe użycie
+Przykładowy program
 ==================
 
-```bash
-$ cat script.lua
-function callback()
-    print("This prints every 1000ms")
-end
-  
-timer = module.timer_new()
-module.stimer_start(timer, 1000, callback)
+```lua
+local tcp = require "lib.tcp"
 
-$ nodelua script.lua
-This prints every 1000ms.
-This prints every 1000ms.
-This prints every 1000ms.
+server = tcp:new()
+server:bind("0.0.0.0", 8000)
+
+server:listen(function(server, status)
+   -- error, must close the server socket & free memory
+   if status < 0 then
+      server:close(function(server)
+         error("Error occured during listening")
+      end)
+   end
+
+   -- otherwise accept new client
+   local client = server:accept()
+   client:read(function(client, nread, data)
+      if nread > 0 then
+         print(string.format("Client '%s' said: %s", client, data))
+      elseif nread < 0 then
+         client:close(function(client)
+            print(string.format("Client '%s' closed the connection", client))
+         end)
+      end
+   end)
+end)
 ```
 
-Zakres projektu
+Założenia projektu
 ===============
 
-  Oczywiście, sama bilbioteka `libuv` jest spora i składa się z wielu
-  komponentów. Z powodu ograniczonego czasu i mojego poziomu znajomości
-  samej bilbioteki zadecydowałem się zaimplementować:   
    * moduł umożliwiający **komunikację z gniazdami TCP**  
-   * moduł odpowiedzialny za **komunikację z plikami**
-   * moduł pozwalający na **cykliczne uruchamanie funkcji w zadanych interwałach czasowych**
+   * moduł odpowiedzialny za **komunikację z plikami**  
+   * moduł pozwalający na **cykliczne uruchamanie funkcji w zadanych interwałach czasowych**  
+   * obiektowy wrapper na surowy moduł C  
+   * prosty asynchroniczny server www demonstrujący możliwości bilbioteki  
 
-Całość zostanie dodatkowo opakowana w wygodny, obiektowy interfejs.
-Jeśli wystarczy mi czasu zaimplementuję prosty serwer http.

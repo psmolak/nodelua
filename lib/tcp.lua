@@ -53,4 +53,14 @@ function Tcp:accept()
     return client
 end
 
+function Tcp:close(callback)
+	if type(callback) ~= "function" then
+		error("1st argument required to be function")
+	end
+	uv.close(self._ptr, function(handle)
+		callback(self)
+		self:delete()
+	end)
+end
+
 return Tcp
