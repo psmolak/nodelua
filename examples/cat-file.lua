@@ -1,6 +1,6 @@
 local fs = require "lib/filesystem"
 
-fs.open("examples/echo-server.lua", function(file, status)
+fs.open("examples/char-server.lua", function(file, status)
 	if status < 0 then
 		error("Error during opening file")
 	end
