@@ -32,10 +32,8 @@ typedef struct l_write_d l_write_d;
 
 int l_write_req_new(lua_State* L);
 int l_write_req_delete(lua_State* L);
-
 int l_shutdown_req_new(lua_State* L);
 int l_shutdown_req_delete(lua_State* L);
-
 int l_connect_req_new(lua_State* L);
 int l_connect_req_delete(lua_State* L);
 

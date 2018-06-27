@@ -47,7 +47,6 @@ static void nodelua_openlibs(lua_State* L)
         { "unref", l_unref },
         { "has_ref", l_has_ref },
         { "handle_size", l_handle_size },
-        /* { "handle_get_type", l_handle_get_type }, */
 
         /* uv_stream_t */
         { "shutdown", l_shutdown },
@@ -59,7 +58,6 @@ static void nodelua_openlibs(lua_State* L)
         { "is_readable", l_is_readable },
         { "is_writable", l_is_writable },
         { "stream_set_blocking", l_stream_set_blocking },
-        /* { "stream_get_write_queue_size", l_stream_get_write_queue_size }, */
 
         /* uv_tcp_t */
         { "tcp_new", l_tcp_new },
@@ -71,8 +69,6 @@ static void nodelua_openlibs(lua_State* L)
         { "tcp_keepalive", l_tcp_keepalive },
         { "tcp_simultaneous_accepts", l_tcp_simultaneous_accepts },
         { "tcp_bind", l_tcp_bind },
-        /* { "tcp_getsockname", l_tcp_getsockname }, */
-        /* { "tcp_getpeername", l_tcp_getpeername }, */
         { "tcp_connect", l_tcp_connect },
 
         /* uv_timer_t */
@@ -109,22 +105,9 @@ static void nodelua_openlibs(lua_State* L)
         { "fs_rmdir", l_fs_rmdir },
         { "fs_scandir", l_fs_scandir },
         { "fs_scandir_next", l_fs_scandir_next },
-        /* { "fs_stat", l_fs_stat }, */
-        /* { "fs_fstat", l_fs_fstat }, */
-        /* { "fs_lstat", l_fs_lstat }, */
         { "fs_rename", l_fs_rename },
-        /* { "fs_copyfile", l_fs_copyfile }, */
-        /* { "fs_access", l_fs_access }, */
         { "fs_chmod", l_fs_chmod },
         { "fs_fchmod", l_fs_fchmod },
-        /* { "fs_utime", l_fs_utime }, */
-        /* { "fs_futime", l_fs_futime }, */
-        /* { "fs_link", l_fs_link }, */
-        /* { "fs_symlink", l_fs_symlink }, */
-        /* { "fs_readlink", l_fs_readlink }, */
-        /* { "fs_realpath", l_fs_realpath }, */
-        /* { "fs_chown", l_fs_chown }, */
-        /* { "fs_fchown", l_fs_fchown }, */
 
         { NULL, NULL }
     };

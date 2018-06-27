@@ -9,17 +9,6 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
-/* 
- * I guess there is no need to specify userdata for handle_t.
- * Every other structure can be casted into it.
- * However there should be some typechecking on userdata.
- *
- * SOLUTION
- * I decided that the hihg-level on-top Lua module will
- * take care of all this base-clase matching ensurance.
- * Thus eliminating type-checking in C at all.
- */
-
 typedef struct {
     lua_State* L;
     int on_alloc;

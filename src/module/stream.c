@@ -106,9 +106,11 @@ int l_write(lua_State* L)
     uv_stream_t* handle = (uv_stream_t*)lua_touserdata(L, 2);
     l_write_d *data = (l_write_d*)req->data;
 
-    /* Third argument is Lua table filled with strings treated as data buffers */
-    /* Those strings are available only in function scope, thus they must be copied */
-    /* Those newly allocated buffers are then freed in l_write_cb */
+    /*
+     * Third argument is Lua table filled with strings treated as data buffers
+     * Those strings are available only in function scope, thus they must be copied
+     * Those newly allocated buffers are then freed in l_write_cb
+     */
 
     unsigned int nbufs = lua_tointeger(L, 4);
     uv_buf_t *bufs = malloc(sizeof(uv_buf_t) * nbufs);
@@ -138,7 +140,12 @@ int l_write(lua_State* L)
 }
 
 
-/* int uv_write2(uv_write_t* req, uv_stream_t* handle, const uv_buf_t bufs[], unsigned int nbufs, uv_stream_t* send_handle, uv_write_cb cb) */
+/* int uv_write2(uv_write_t* req,
+ *               uv_stream_t* handle,
+ *               const uv_buf_t bufs[],
+ *               unsigned int nbufs,
+ *               uv_stream_t* send_handle,
+ *               uv_write_cb cb) */
 int l_write2(lua_State* L)
 {
 
@@ -183,9 +190,6 @@ int l_stream_set_blocking(lua_State *L)
 /* size_t uv_stream_get_write_queue_size(const uv_stream_t* stream) */
 int l_stream_get_write_queue_size(lua_State *L)
 {
-    /* uv_stream_t *stream = (uv_stream_t*)lua_touserdata(L, 1); */
-    /* lua_pushinteger(L, uv_stream_get_write_queue_size(stream)); */
-    /* return 1; */
 }
 
 
@@ -202,12 +206,10 @@ void l_read_cb(uv_stream_t* stream, ssize_t nread, const uv_buf_t* buf)
     lua_pushlightuserdata(data->L, (void*)stream);
     lua_pushinteger(data->L, nread);
 
-    /* TODO: Is copying really a nessesity here? */
     if (nread > 0) lua_pushlstring(data->L, buf->base, nread);
     else lua_pushnil(data->L);
 
     lua_call(data->L, 3, 0);
-
     free(buf->base);
 }
 

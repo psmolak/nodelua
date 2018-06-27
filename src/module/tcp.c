@@ -22,11 +22,13 @@ int l_tcp_new(lua_State* L)
     if (handle == NULL) {
         luaL_error(L, "Failed to allocade memory for tcp handle");
     }
+
     l_stream_d* data = malloc(sizeof(l_stream_d));
     if (data == NULL) {
         free(handle);
         luaL_error(L, "Failed to allocate memory for tcp data");
     }
+
     data->L = L;
     handle->data = data;
 

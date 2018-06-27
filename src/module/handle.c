@@ -124,10 +124,7 @@ int l_handle_get_loop(lua_State* L)
 /* uv_handle_type uv_handle_get_type(const uv_handle_t* handle) */
 int l_handle_get_type(lua_State* L)
 {
-    /* uv_handle_t *handle = (uv_handle_t*)lua_touserdata(L, 1); */
-    /* lua_pushinteger(L, (int)uv_handle_get_type(handle)); */
 
-    /* return 1; */
 }
 
 
@@ -139,9 +136,6 @@ int l_handle_get_type(lua_State* L)
 /* Type definition for callback passed to uv_read_start() and uv_udp_recv_start() */
 void l_alloc_cb(uv_handle_t* handle, size_t suggested_size, uv_buf_t* buf)
 {
-    /* TODO: Make inheritance of struct possible. */
-    /* Right now l_handle_d and l_stream_d couse errors */
-
     l_handle_d *data = (l_handle_d*)handle->data;
     lua_State *L = data->L;
     int on_alloc_ref = data->on_alloc;
@@ -155,8 +149,10 @@ void l_alloc_cb(uv_handle_t* handle, size_t suggested_size, uv_buf_t* buf)
     buf->base = malloc(suggested_size);
     buf->len = suggested_size;
 
-    /* Since this callback is fired many times through its handle lifetime */
-    /* there is no need to unref Lua callback here */
+    /*
+     * Since this callback is fired many times through its handle lifetime
+     * there is no need to unref Lua callback here
+     */
 }
 
 
@@ -172,8 +168,6 @@ void l_close_cb(uv_handle_t* handle)
     lua_pushlightuserdata(L, (void*)handle);
     lua_call(L, 1, 0);
 
-    /* It's save to unref Lua callback here, since every future
-     * close call on this handle will accept fresh callback*/
     luaL_unref(L, LUA_REGISTRYINDEX, on_close_ref);
     luaL_unref(L, LUA_REGISTRYINDEX, on_alloc_ref);
 }

@@ -19,14 +19,15 @@ int l_write_req_new(lua_State* L)
     if (req == NULL) {
         luaL_error(L, "Failed to allocate memory for write request");
     }
+
     l_write_d* data = malloc(sizeof(l_write_d));
     if (data == NULL) {
         free(req);
         luaL_error(L, "Failed to allocate memory for data write");
     }
+
     req->data = data;
     data->L = L;
-
     lua_pushlightuserdata(L, (void*)req);
     return 1;
 }
@@ -47,14 +48,15 @@ int l_shutdown_req_new(lua_State* L)
     if (req == NULL) {
         luaL_error(L, "Failed to allocate memory for shutdown request");
     }
+
     l_shutdown_d* data = malloc(sizeof(l_shutdown_d));
     if (data == NULL) {
         free(req);
         luaL_error(L, "Failed to allocate memory for shutdown data");
     }
+
     req->data = data;
     data->L = L;
-
     lua_pushlightuserdata(L, (void*)req);
     return 1;
 }
@@ -75,14 +77,15 @@ int l_connect_req_new(lua_State* L)
     if (req == NULL) {
         luaL_error(L, "Failed to allocate memory for connect request");
     }
+
     l_connect_d* data = malloc(sizeof(l_connect_d));
     if (data == NULL) {
         free(req);
         luaL_error(L, "Failed to allocate memory for connect data");
     }
+
     req->data = data;
     data->L = L;
-
     lua_pushlightuserdata(L, (void*)req);
     return 1;
 }

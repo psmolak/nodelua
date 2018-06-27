@@ -21,15 +21,16 @@ int l_fs_req_new(lua_State* L)
     if (req == NULL) {
         luaL_error(L, "Failed to allocate memory for fs request");
     }
+
     l_fs_data* data = malloc(sizeof(l_fs_data));
     if (data == NULL) {
         free(req);
         luaL_error(L, "Failed to allocate memory for fs data");
     }
+
     req->data = data;
     data->L = L;
     data->callback = LUA_NOREF;
-
     lua_pushlightuserdata(L, (void*)req);
     return 1;
 }
@@ -111,7 +112,6 @@ int l_fs_read(lua_State* L)
     l_fs_data* data = (l_fs_data*)req->data;
     uv_file file = (uv_file)lua_tointeger(L, 2);
 
-    /* For now, just malloc one buffer with 64k bytes and ignore arguments */
     data->bufs = malloc(sizeof(uv_buf_t));
     data->bufs[0].base = malloc(sizeof(char) * 65536);
     data->bufs[0].len = 65536;
@@ -337,27 +337,13 @@ int l_fs_fsync(lua_State* L);
 int l_fs_fdatasync(lua_State* L);
 /* int uv_fs_ftruncate(uv_loop_t* loop, uv_fs_t* req, uv_file file, int64_t offset, uv_fs_cb cb) */
 int l_fs_ftruncate(lua_State* L);
-
 /* int uv_fs_copyfile(uv_loop_t* loop,
  *                    uv_fs_t* req,
  *                    const char* path,
  *                    const char* new_path,
  *                    int flags,
  *                    uv_fs_cb cb) */
-int l_fs_copyfile(lua_State* L)
-{
-    /* uv_fs_t* req = (uv_fs_t*)lua_touserdata(L, 1); */
-    /* l_fs_data* data = (l_fs_data*)req->data; */
-    /* const char* path = lua_tostring(L, 2); */
-    /* const char* new_path = lua_tostring(L, 3); */
-    /* int flags = lua_tointeger(L, 4); */
-    /* lua_pushvalue(L, 5); */
-    /* data->callback = luaL_ref(L, LUA_REGISTRYINDEX); */
-
-    /* lua_pushinteger(L, uv_fs_copyfile(uv_default_loop(), req, path, new_path, flags, l_fs_callback)); */
-    /* return 1; */
-}
-
+int l_fs_copyfile(lua_State* L);
 /* int uv_fs_sendfile(uv_loop_t* loop, uv_fs_t* req, uv_file out_fd, uv_file in_fd, int64_t in_offset, size_t length, uv_fs_cb cb) */
 int l_fs_sendfile(lua_State* L);
 /* nt uv_fs_access(uv_loop_t* loop, uv_fs_t* req, const char* path, int mode, uv_fs_cb cb) */
