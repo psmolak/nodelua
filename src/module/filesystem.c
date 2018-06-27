@@ -89,7 +89,11 @@ int l_fs_open(lua_State* L)
     l_fs_data* data = req->data;
     data->callback = callback;
 
-    lua_pushinteger(L, uv_fs_open(uv_default_loop(), req, path, flags, mode , l_fs_callback));
+    lua_pushinteger(L, uv_fs_open(uv_default_loop(),
+                                  req, path,
+                                  O_RDWR | O_CREAT,
+                                  S_IRUSR | S_IWUSR,
+                                  l_fs_callback));
     return 1;
 }
 
@@ -435,6 +439,7 @@ void l_fs_callback(uv_fs_t* req)
             args += 2;
             break;
 
+        case UV_FS_CLOSE:
         case UV_FS_CHOWN:
         case UV_FS_RENAME:
         case UV_FS_SCANDIR:
