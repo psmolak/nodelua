@@ -1,4 +1,5 @@
-LIBS = -llua -luv
+LIBS = -llua5.3 -luv
+INCLUDE = -I/usr/include/lua5.3
 MODULE = $(patsubst %.c,%.o,$(wildcard src/module/*.c))
 
 nodelua: src/main.o $(MODULE)
@@ -7,7 +8,7 @@ nodelua: src/main.o $(MODULE)
 
 %.o: %.c
 	@echo CC $^
-	@gcc -c $^ -o $@ 
+	@gcc $(INCLUDE) -c $^ -o $@ 
 
 .PHONY: clean
 clean:

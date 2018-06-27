@@ -47,11 +47,7 @@ static void nodelua_openlibs(lua_State* L)
         { "unref", l_unref },
         { "has_ref", l_has_ref },
         { "handle_size", l_handle_size },
-        /* { "send_buffer_size", l_send_buffer_size }, */
-        /* { "recv_buffer_size", l_recv_buffer_size }, */
-        /* { "fileno", l_fileno }, */
-        /* { "handle_get_loop", l_handle_get_loop }, */
-        { "handle_get_type", l_handle_get_type },
+        /* { "handle_get_type", l_handle_get_type }, */
 
         /* uv_stream_t */
         { "shutdown", l_shutdown },
@@ -60,12 +56,10 @@ static void nodelua_openlibs(lua_State* L)
         { "read_start", l_read_start },
         { "read_stop", l_read_stop },
         { "write", l_write },
-        /* { "write2", l_write2 }, */
-        /* { "try_write", l_try_write }, */
         { "is_readable", l_is_readable },
         { "is_writable", l_is_writable },
         { "stream_set_blocking", l_stream_set_blocking },
-        { "stream_get_write_queue_size", l_stream_get_write_queue_size },
+        /* { "stream_get_write_queue_size", l_stream_get_write_queue_size }, */
 
         /* uv_tcp_t */
         { "tcp_new", l_tcp_new },
@@ -100,10 +94,6 @@ static void nodelua_openlibs(lua_State* L)
         { "connect_req_delete", l_connect_req_delete },
         { "req_cancel", l_req_cancel },
         { "req_size", l_req_size },
-        /* { "req_get_data", l_req_get_data }, */
-        /* { "req_set_data", l_req_set_data }, */
-        /* { "req_get_type", l_req_get_type }, */
-        /* { "req_type_name", l_req_type_name }, */
 
         /* uv_fs_t */
         { "fs_req_new", l_fs_req_new },
@@ -123,11 +113,7 @@ static void nodelua_openlibs(lua_State* L)
         /* { "fs_fstat", l_fs_fstat }, */
         /* { "fs_lstat", l_fs_lstat }, */
         { "fs_rename", l_fs_rename },
-        /* { "fs_fsync", l_fs_fsync }, */
-        /* { "fs_fdatasync", l_fs_fdatasync }, */
-        /* { "fs_ftruncate", l_fs_ftruncate }, */
-        { "fs_copyfile", l_fs_copyfile },
-        /* { "fs_sendfile", l_fs_sendfile }, */
+        /* { "fs_copyfile", l_fs_copyfile }, */
         /* { "fs_access", l_fs_access }, */
         { "fs_chmod", l_fs_chmod },
         { "fs_fchmod", l_fs_fchmod },
@@ -139,11 +125,6 @@ static void nodelua_openlibs(lua_State* L)
         /* { "fs_realpath", l_fs_realpath }, */
         /* { "fs_chown", l_fs_chown }, */
         /* { "fs_fchown", l_fs_fchown }, */
-        /* { "fs_get_type", l_fs_get_type }, */
-        /* { "fs_get_result", l_fs_get_result }, */
-        /* { "fs_get_ptr", l_fs_get_ptr }, */
-        /* { "fs_get_path", l_fs_get_path }, */
-        /* { "fs_get_statbuf", l_fs_get_statbuf }, */
 
         { NULL, NULL }
     };

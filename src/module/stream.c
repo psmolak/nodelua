@@ -183,9 +183,9 @@ int l_stream_set_blocking(lua_State *L)
 /* size_t uv_stream_get_write_queue_size(const uv_stream_t* stream) */
 int l_stream_get_write_queue_size(lua_State *L)
 {
-    uv_stream_t *stream = (uv_stream_t*)lua_touserdata(L, 1);
-    lua_pushinteger(L, uv_stream_get_write_queue_size(stream));
-    return 1;
+    /* uv_stream_t *stream = (uv_stream_t*)lua_touserdata(L, 1); */
+    /* lua_pushinteger(L, uv_stream_get_write_queue_size(stream)); */
+    /* return 1; */
 }
 
 

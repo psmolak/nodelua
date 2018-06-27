@@ -124,10 +124,10 @@ int l_handle_get_loop(lua_State* L)
 /* uv_handle_type uv_handle_get_type(const uv_handle_t* handle) */
 int l_handle_get_type(lua_State* L)
 {
-    uv_handle_t *handle = (uv_handle_t*)lua_touserdata(L, 1);
-    lua_pushinteger(L, (int)uv_handle_get_type(handle));
+    /* uv_handle_t *handle = (uv_handle_t*)lua_touserdata(L, 1); */
+    /* lua_pushinteger(L, (int)uv_handle_get_type(handle)); */
 
-    return 1;
+    /* return 1; */
 }
 
 
