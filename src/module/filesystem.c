@@ -342,16 +342,16 @@ int l_fs_ftruncate(lua_State* L);
  *                    uv_fs_cb cb) */
 int l_fs_copyfile(lua_State* L)
 {
-    uv_fs_t* req = (uv_fs_t*)lua_touserdata(L, 1);
-    l_fs_data* data = (l_fs_data*)req->data;
-    const char* path = lua_tostring(L, 2);
-    const char* new_path = lua_tostring(L, 3);
-    int flags = lua_tointeger(L, 4);
-    lua_pushvalue(L, 5);
-    data->callback = luaL_ref(L, LUA_REGISTRYINDEX);
+    /* uv_fs_t* req = (uv_fs_t*)lua_touserdata(L, 1); */
+    /* l_fs_data* data = (l_fs_data*)req->data; */
+    /* const char* path = lua_tostring(L, 2); */
+    /* const char* new_path = lua_tostring(L, 3); */
+    /* int flags = lua_tointeger(L, 4); */
+    /* lua_pushvalue(L, 5); */
+    /* data->callback = luaL_ref(L, LUA_REGISTRYINDEX); */
 
-    lua_pushinteger(L, uv_fs_copyfile(uv_default_loop(), req, path, new_path, flags, l_fs_callback));
-    return 1;
+    /* lua_pushinteger(L, uv_fs_copyfile(uv_default_loop(), req, path, new_path, flags, l_fs_callback)); */
+    /* return 1; */
 }
 
 /* int uv_fs_sendfile(uv_loop_t* loop, uv_fs_t* req, uv_file out_fd, uv_file in_fd, int64_t in_offset, size_t length, uv_fs_cb cb) */
@@ -436,7 +436,6 @@ void l_fs_callback(uv_fs_t* req)
             break;
 
         case UV_FS_CHOWN:
-        case UV_FS_COPYFILE:
         case UV_FS_RENAME:
         case UV_FS_SCANDIR:
         case UV_FS_RMDIR:
