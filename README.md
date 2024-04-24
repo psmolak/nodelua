@@ -1,26 +1,31 @@
 nodelua
 =======
  
-  **nodelua** jest próbą przeniesienia ideii asynchronicznego interpretera
-  opertego o pętle zdarzeń - **nodejs** - do świata Lua.  
-  Dokladna dokumentacja znajduje sie w katalogu `docs/`.
+  **nodelua** is an attempt to bring the idea of asynchronous programming
+  based on event loop like **nodejs** into the realm Lua programming lnagugae.
 
-Kompilacja oraz uruchomienie
+  For more details please refer to documentation inside `docs/`.
+
+Compilation & running
 ============================
 
-Do skompilowania potrzebne są następujące bilbioteki (Debian):
+You need the following dependencies in order to compile the code:
  * liblua5.3-0
  * liblua5.3-dev
  * libuv1
  * libuv1-dev
 
-Nastepnie w głównym katalogu projektu należy skompilować program
-poleceniem `make`.  
-Program `nodelua` przyjmuje jako pierwszy argument nazwę pliku z kodem
-Lua lub czyta ze standardowego wejścia.  
-Przykładowe programy znajdują się w katalogu `tests/`.
+then in the main directory run `make`.
 
-Przykładowy program
+Usage
+=====
+
+`nodelua [<file>]`
+If no `<file>` is provided, the program reads from its stdin.
+
+You can find more usage examples inside `tests/` directory.
+
+Example
 ==================
 
 ```lua
@@ -50,13 +55,4 @@ server:listen(function(server, status)
    end)
 end)
 ```
-
-Założenia projektu
-===============
-
-   * moduł umożliwiający **komunikację z gniazdami TCP**  
-   * moduł odpowiedzialny za **komunikację z plikami**  
-   * moduł pozwalający na **cykliczne uruchamanie funkcji w zadanych interwałach czasowych**  
-   * obiektowy wrapper na surowy moduł C  
-   * prosty asynchroniczny server www demonstrujący możliwości bilbioteki  
 
